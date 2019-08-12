@@ -1,0 +1,9 @@
+{
+    "access": "direct",
+    "database": "exchange",
+    "name": "Rate",
+    "password": "redhat",
+    "type": "influxdb",
+    "url": "http://influxdb:8086",
+    "user": "root"
+}

@@ -1,0 +1,41 @@
+version: '3.2'
+
+services:
+  airflow:
+    build: ./airflow
+    restart: always
+    links:
+      - postgresql
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/app/airflow/dags
+
+  postgresql:
+    build: ./postgresql
+    restart: always
+    links:
+      - grafana
+
+  influxdb:
+    build: ./influxdb
+    env_file: configuration.env
+    ports:
+      - '8086:8086'
+    volumes:
+      - influxdb_data:/var/lib/influxdb
+
+  grafana:
+    build: ./grafana
+    env_file: configuration.env
+    restart: always
+    links:
+      - influxdb
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana_data:/var/lib/grafana
+
+volumes:
+  grafana_data: {}
+  influxdb_data: {}
